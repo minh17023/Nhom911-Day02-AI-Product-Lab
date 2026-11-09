@@ -29,8 +29,8 @@ Ngưỡng 5% là quy tắc bài lab. `dispatch_mobile_charger` chỉ là mã **�
 
 ## 3. AI Fit và Future Flow — G3
 
-| Phương án | Ưu điểm | Hạn chế | Lựa chọn |
-|---|---|---|---|
+| Phương án  | Ưu điểm | Hạn chế | Lựa chọn |
+|---|---|--- |---|
 | Rule + template | Ranh giới xác định, dễ kiểm thử, chi phí thấp | Ít linh hoạt với báo cáo tự do | Baseline và lớp kiểm soát bắt buộc |
 | LLM Feature | Tóm tắt và soạn nháp tiếng Việt linh hoạt | Có thể bịa hoặc theo prompt injection | Thử nghiệm hẹp, HITL |
 | Agentic Loop | Gọi nhiều công cụ | Tăng quyền, độ trễ, khó kiểm soát | Chưa cần trong phạm vi này |
