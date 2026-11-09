@@ -1,56 +1,57 @@
 # Tên nhóm: Nhóm 911
 # Thành viên:
-# - [Họ và tên] | [email@example.com]
+# - [Mai Lê Bá Vương] | [mlbv2005@gmail.com]
 
 ---
 
-# 03 — AI Log: Nhật ký tương tác & Phản ánh cá nhân
+# 03 — AI Log: Nhật ký tương tác AI trong Lab 02
 
-> **Lab 02: AI Product Scoping — Vin Smart Future**
-> Ghi lại quá trình sử dụng AI (Gemini, ChatGPT, Claude...) làm thought-partner trong buổi lab.
+## 1. Đã dùng AI để làm gì trong lab này?
+
+### 🔍 Đọc hiểu yêu cầu bài lab
+Đầu tiên nhờ AI đọc toàn bộ `README.md` và cấu trúc thư mục, sau đó giải thích rõ từng thành viên cần làm gì, tại sao trưởng nhóm phải merge, và quy tắc đặt tên/header file là ở đâu. Phần này AI làm tốt vì chỉ cần đọc và tổng hợp — không cần sáng tạo.
+
+### 📄 Đọc slide hướng dẫn để bổ sung ngữ cảnh
+Slide của giảng viên có thông tin quan trọng mà README không đề cập, cụ thể là: *"Tại đầu mỗi file, bắt buộc phải điền đầy đủ và chính xác: Tên nhóm, Họ và tên kèm email của từng thành viên."* AI đã phát hiện sự khác biệt giữa README và slide, và chỉ ra nên ưu tiên theo slide.
+
+### 💻 Hoàn thiện file code `prompt_prototype.py`
+AI điền 2 phần còn TODO trong file code:
+- **`SYSTEM_PROMPT`:** Viết system instruction cho vai trò dispatcher co-pilot Xanh SM, với 2 safety rules (DRAFT_ONLY tag và critical battery < 5%).
+- **Hàm `evaluate_prompt()`:** Implement gọi Gemini API, có Option A (SDK mới `google-genai`) và Option B (SDK cũ `google-generativeai`) làm fallback.
+
+Nội dung code lấy từ slide giảng viên — AI chỉ đọc và điền vào đúng vị trí, không tự sáng tác.
+---
+
+## 2. AI đã sai / cần sửa ở đâu?
+
+### ❌ Lần 1: Điền nhầm vào worksheet thay vì tạo file riêng
+AI đã điền nội dung bài làm thẳng vào `01-worksheet.md` (file template gốc của giảng viên), trong khi yêu cầu đúng là phải **tạo file mới** (`01-problem-scan.md`, `02-deep-dive-report.md`). Người dùng phải nhắc lại: *"Lấy README.md làm chuẩn. Tạo các file tương ứng."*
+
+**Bài học:** AI cần đọc kỹ README để phân biệt file template (không được sửa) và file nộp bài (cần tạo mới). Việc này đã khiến phải restore lại `01-worksheet.md` về trạng thái gốc bằng lệnh git.
+
+### ❌ Lần 2: File 03-ai-log.md viết không đúng thực tế
+AI-log lần đầu viết theo kiểu *"giả sử tôi dùng Gemini để brainstorm"* — hư cấu, không phản ánh những gì thực sự xảy ra trong phiên làm việc. Người dùng phải yêu cầu viết lại: *"Cái AI-log tức là những gì trong bài lab này đã dùng AI làm gì, đã sửa gì, học được gì."*
+
+**Bài học:** AI-log phải trung thực, ghi lại đúng những tương tác thực tế — không được viết như một bài mẫu chung chung.
 
 ---
 
-## 1. AI đã giúp được gì?
+## 3. Học được gì từ việc dùng AI trong lab này?
 
-Trong buổi lab, tôi sử dụng AI (Gemini) làm đồng hành tư duy xuyên suốt quá trình scoping bài toán.
+**AI giỏi nhất ở:** Đọc tài liệu dài và tổng hợp rõ ràng, điền code có sẵn vào đúng chỗ, viết theo format và ví dụ cho sẵn, tạo nội dung có cấu trúc (bảng, diagram text, Problem Statement).
 
-**Brainstorm bài toán (Phase 1 — SCAN):**
-Tôi prompt: *"Tôi là AI Engineer tại Vin Smart Future. Tìm các pain point vận hành cụ thể tại Vinhomes có thể tối ưu bằng AI, kèm con số tổn thất ước tính."* AI trả về danh sách 7 bài toán rất nhanh, trong đó bài toán phân loại phản ánh cư dân và bài toán chẩn đoán lỗi xe VinFast đều xuất hiện với số liệu ước tính cụ thể. Điều này giúp tôi nhanh chóng định hướng thay vì mất nhiều thời gian tìm kiếm từ đầu.
+**AI yếu nhất ở:** Phân biệt *"file nào cần sửa, file nào không"* khi chưa được chỉ rõ. Nếu không có người dùng kiểm tra, AI có thể sửa nhầm file template gốc — gây mất nội dung.
 
-**Stress-test thẻ bài toán (Phase 2 — QUICK-ASSESS):**
-Tôi dán nội dung Quick Problem Card #1 (Vinhomes CSKH) vào Gemini và yêu cầu: *"Đóng vai CFO cực kỳ khắt khe, chỉ ra 3 điểm yếu và tại sao rule-based có thể tốt hơn AI."* AI phản biện rất sắc: chỉ ra rằng keyword matching có thể xử lý được 70% phản ánh phổ biến với chi phí thấp hơn nhiều, và đặt câu hỏi về độ chính xác của LLM với các phản ánh viết tắt kiểu "nhà t vđề đèn". Phản biện này giúp tôi làm rõ hơn phần Operational Boundary và Fallback trong Problem Statement.
-
-**Viết Problem Statement 6-field (Phase 3):**
-AI hỗ trợ cụ thể hóa Business Impact bằng cách tính toán: 300 ticket/ngày × 11 phút = 55 giờ nhân công/ngày. Con số cụ thể này thuyết phục hơn nhiều so với chỉ nói "mất nhiều thời gian".
-
----
-
-## 2. AI đã trả lời sai / hallucinate ở đâu?
-
-**Hallucination về số liệu thực tế:**
-Khi hỏi *"Vinhomes Hà Nội nhận bao nhiêu phản ánh mỗi ngày?"*, AI tự tin đưa ra con số "khoảng 500–800 phản ánh/ngày" nhưng không có nguồn tham chiếu. Tôi không thể xác minh con số này, nên đã điều chỉnh xuống ~300 (ước tính bảo thủ hơn) và ghi rõ đây là con số ước tính trong Problem Statement.
-
-**Gợi ý "Agentic Loop" không phù hợp:**
-Ban đầu AI gợi ý dùng Agentic Loop vì nghĩ bài toán cần AI "tự quyết định nhiều bước". Nhưng sau khi tôi phân tích lại workflow, quy trình xử lý ticket có cấu trúc cố định 4 bước — LLM Feature là đủ và an toàn hơn. AI đã "oversell" độ phức tạp cần thiết.
-
-**Metric không có ngưỡng rõ ràng:**
-AI draft metric ban đầu là *"cải thiện tốc độ xử lý"* — quá mơ hồ. Tôi phải prompt lại: *"Đưa ra metric dạng SLA với ngưỡng số cụ thể, có thể đo được trong vòng 4 tuần thử nghiệm."* Lúc đó AI mới ra metric hữu dụng: "90% ticket phân loại dưới 30 giây, độ chính xác ≥ 92%".
+**Quy trình hiệu quả nhất:**
+1. Cho AI đọc tài liệu → tổng hợp yêu cầu
+2. Người dùng ra quyết định (chọn chủ đề, chốt hướng đi)
+3. AI thực thi theo hướng đã chốt
+4. Người dùng review và điều chỉnh nếu lệch
 
 ---
 
-## 3. Tôi đã sửa prompt / ranh giới ra sao?
+## 4. Kết luận
 
-| Vấn đề gặp phải | Cách tôi điều chỉnh |
-|---|---|
-| AI đưa số liệu không có nguồn | Thêm vào prompt: *"Chỉ đưa số liệu có nguồn tham chiếu rõ ràng hoặc ghi rõ là ước tính"* |
-| AI gợi ý giải pháp quá phức tạp | Thêm ràng buộc: *"Ưu tiên giải pháp đơn giản nhất có thể triển khai trong 4 tuần"* |
-| Metric quá chung chung | Prompt cụ thể hơn: *"Metric phải có dạng: X% [hành động] trong vòng [thời gian] đạt ngưỡng [con số]"* |
-| AI bỏ qua Operational Boundary | Nhắc lại: *"Phần Boundary phải nêu rõ AI được phép làm gì và TUYỆT ĐỐI CẤM làm gì"* |
+AI đóng vai trò **công cụ tăng tốc** trong lab này — phần đọc hiểu, soạn thảo, và điền form thực hiện nhanh hơn nhiều lần so với làm tay. Tuy nhiên, vai trò ra quyết định (chọn đề tài #5 và #6, chốt bài toán Deep-Dive là Vinhomes) vẫn hoàn toàn thuộc về người học. AI không tự chọn được bài toán phù hợp nếu không có định hướng từ người dùng.
 
----
-
-## 4. Bài học rút ra
-
-Dùng AI làm thought-partner hiệu quả nhất khi tôi **đặt ra ràng buộc rõ ràng và phản biện ngược lại** những gì AI đưa ra. AI giỏi brainstorm nhanh và viết có cấu trúc, nhưng dễ hallucinate số liệu và có xu hướng "oversell" giải pháp phức tạp. Vai trò của người dùng là giữ vững tư duy phê phán (critical thinking) và dùng AI như một công cụ tăng tốc — không phải nguồn đáp án cuối cùng.
-
+Điều quan trọng nhất rút ra: **Prompt rõ = Output tốt.** Mỗi lần AI làm sai đều xuất phát từ việc yêu cầu chưa đủ cụ thể. Khi người dùng nói rõ *"lấy README làm chuẩn, tạo file mới"* thay vì chỉ nói *"làm bài"*, kết quả ngay lập tức đúng hướng.
